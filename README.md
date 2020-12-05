@@ -46,6 +46,18 @@ The included `Makefile` will export a benchmark as `benchmarks_$$(date +"%Y_%m_%
 
 | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
 |:---|---:|---:|---:|---:|
+| `docker exec advent-of-code_php800cli php ./DayFour/PartTwo.php` | 142.5 ± 13.6 | 119.6 | 183.1 | 1.04 ± 0.14 |
+| `docker exec advent-of-code_php743cli php ./DayFour/PartTwo.php` | 143.2 ± 13.4 | 120.1 | 189.3 | 1.05 ± 0.14 |
+| `docker exec advent-of-code_php71cli php ./DayFour/PartTwo.php` | 145.5 ± 17.8 | 118.0 | 209.5 | 1.06 ± 0.17 |
+| `docker exec advent-of-code_php7cli php ./DayFour/PartTwo.php` | 141.2 ± 12.4 | 119.4 | 177.5 | 1.03 ± 0.14 |
+| `docker exec advent-of-code_php54cli php ./DayFour/PartTwo.php` | - | - | - | - |
+| `docker exec advent-of-code_php53cli php ./DayFour/PartTwo.php` | - | - | - | - |
+| `docker exec advent-of-code_php800cli php ./DayFour/PartOne.php` | 150.0 ± 15.3 | 122.5 | 196.4 | 1.10 ± 0.16 |
+| `docker exec advent-of-code_php743cli php ./DayFour/PartOne.php` | 152.2 ± 15.6 | 128.7 | 201.4 | 1.11 ± 0.16 |
+| `docker exec advent-of-code_php71cli php ./DayFour/PartOne.php` | 143.9 ± 13.3 | 123.1 | 191.7 | 1.05 ± 0.14 |
+| `docker exec advent-of-code_php7cli php ./DayFour/PartOne.php` | 143.2 ± 14.1 | 124.3 | 183.8 | 1.05 ± 0.15 |
+| `docker exec advent-of-code_php54cli php ./DayFour/PartOne.php` | - | - | - | - |
+| `docker exec advent-of-code_php53cli php ./DayFour/PartOne.php` | - | - | - | - |
 | `docker exec advent-of-code_php800cli php ./DayThree/PartTwo.php` | 167.0 ± 26.8 | 129.6 | 258.3 | 1.20 ± 0.22 |
 | `docker exec advent-of-code_php743cli php ./DayThree/PartTwo.php` | 148.8 ± 14.4 | 124.3 | 200.0 | 1.07 ± 0.15 |
 | `docker exec advent-of-code_php71cli php ./DayThree/PartTwo.php` | 146.7 ± 14.3 | 127.8 | 203.3 | 1.05 ± 0.14 |
@@ -82,3 +94,8 @@ The included `Makefile` will export a benchmark as `benchmarks_$$(date +"%Y_%m_%
 | `docker exec advent-of-code_php7cli php ./DayOne/PartOne.php` | 145.9 ± 15.3 | 118.8 | 194.7 | 1.06 ± 0.16 |
 | `docker exec advent-of-code_php54cli php ./DayOne/PartOne.php` | 143.1 ± 13.4 | 123.7 | 180.4 | 1.04 ± 0.15 |
 | `docker exec advent-of-code_php53cli php ./DayOne/PartOne.php` | 139.6 ± 17.7 | 114.6 | 196.9 | 1.01 ± 0.17 |
+
+## TODO
+
+- Get Hyperpixel running inside the container, and pickup the output. (So we're timing the argument and not the docker exec time)
+- Add a new level of directory nesting for language/argument specific so it becomes /php/Day*/Part*.*
