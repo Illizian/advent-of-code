@@ -46,6 +46,18 @@ The included `Makefile` will export a benchmark as `benchmarks_$$(date +"%Y_%m_%
 
 | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
 |:---|---:|---:|---:|---:|
+| `docker exec advent-of-code_php800cli php ./DaySix/PartTwo.php` | 150.2 ± 16.7 | 123.2 | 192.1 | 1.13 ± 0.19 |
+| `docker exec advent-of-code_php743cli php ./DaySix/PartTwo.php` | 147.6 ± 13.4 | 122.3 | 187.7 | 1.11 ± 0.17 |
+| `docker exec advent-of-code_php71cli php ./DaySix/PartTwo.php` | 145.9 ± 15.6 | 122.1 | 189.0 | 1.10 ± 0.18 |
+| `docker exec advent-of-code_php7cli php ./DaySix/PartTwo.php` | 149.8 ± 19.5 | 124.0 | 212.3 | 1.13 ± 0.20 |
+| `docker exec advent-of-code_php54cli php ./DaySix/PartTwo.php` | - | - | - | - |
+| `docker exec advent-of-code_php53cli php ./DaySix/PartTwo.php` | - | - | - | - |
+| `docker exec advent-of-code_php800cli php ./DaySix/PartOne.php` | 146.3 ± 14.0 | 122.3 | 186.0 | 1.10 ± 0.17 |
+| `docker exec advent-of-code_php743cli php ./DaySix/PartOne.php` | 146.0 ± 14.1 | 122.3 | 185.7 | 1.10 ± 0.17 |
+| `docker exec advent-of-code_php71cli php ./DaySix/PartOne.php` | 142.5 ± 14.7 | 121.0 | 184.2 | 1.07 ± 0.17 |
+| `docker exec advent-of-code_php7cli php ./DaySix/PartOne.php` | 145.3 ± 17.1 | 119.6 | 186.1 | 1.09 ± 0.19 |
+| `docker exec advent-of-code_php54cli php ./DaySix/PartOne.php` | - | - | - | - |
+| `docker exec advent-of-code_php53cli php ./DaySix/PartOne.php` | - | - | - | - |
 | `docker exec advent-of-code_php800cli php ./DayFive/PartTwo.php` | 204.8 ± 11.3 | 173.0 | 240.6 | 1.05 ± 0.10 |
 | `docker exec advent-of-code_php743cli php ./DayFive/PartTwo.php` | 246.5 ± 83.2 | 189.1 | 625.6 | 1.26 ± 0.44 |
 | `docker exec advent-of-code_php71cli php ./DayFive/PartTwo.php` | 234.5 ± 67.9 | 180.5 | 551.7 | 1.20 ± 0.36 |
