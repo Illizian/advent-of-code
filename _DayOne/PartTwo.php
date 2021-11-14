@@ -8,7 +8,7 @@ foreach ($numbers as $a) {
     foreach ($numbers as $b) {
         foreach ($numbers as $c) {
             if($a +  $b +  $c === 2020) {
-				echo "Your answer is: " . ($a * $b * $c) . "\n";
+				        echo "Your answer is: " . ($a * $b * $c) . "\n";
                 break 3;
             }
         }

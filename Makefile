@@ -3,7 +3,8 @@
 
 ### Cofiguration
 
-IMAGES := php:8.0.0-cli php:7.4.3-cli php:7.1-cli php:7-cli php:5.4-cli php:5.3-cli
+# IMAGES := php:8.0.0-cli php:7.4.3-cli php:7.1-cli php:7-cli php:5.4-cli php:5.3-cli
+IMAGES := php:8.0.0-cli
 COMMAND := php
 WARMUP := 3
 MIN_RUNS := 100
