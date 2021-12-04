@@ -1,0 +1,29 @@
+{
+    "name": "illizian/advent-code-code-2020",
+    "description": "Advent of Code 2020",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Scotton",
+            "email": "alex@alexscotton.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Illizian\\AdventOfCode\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/collections": "^8.74",
+        "pestphp/pest": "^1.21",
+        "symfony/var-dumper": "^5.4"
+    }
+}
