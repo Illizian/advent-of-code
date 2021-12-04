@@ -13,14 +13,12 @@ class DayOnePartOne
         $result = Collection::make($input)
             ->map(fn($value) => (int) $value)
             ->reduce(function($carry, $value) {
-                if ($carry === null) {
-                    return [0, $value];
-                }
+                $previous = $carry ?? [ 0, $value ];
                 
                 return [
-                    $value > $carry[1]
-                        ? $carry[0] + 1
-                        : $carry[0],
+                    $value > $previous[1]
+                        ? $previous[0] + 1
+                        : $previous[0],
                     $value
                 ];
             });
