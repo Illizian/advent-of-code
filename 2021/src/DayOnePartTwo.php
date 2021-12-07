@@ -14,7 +14,7 @@ class DayOnePartTwo
             Collection::make($input)
                 ->map(fn($value) => (int) $value)
                 ->sliding(3)
-                ->map(fn($window) => $window->sum())
+                ->map->sum()
                 ->toArray()
         );
     }
