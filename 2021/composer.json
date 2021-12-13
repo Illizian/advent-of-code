@@ -24,6 +24,7 @@
     "require": {
         "illuminate/collections": "^8.74",
         "pestphp/pest": "^1.21",
+        "spatie/ray": "^1.32",
         "symfony/var-dumper": "^5.4"
     }
 }
