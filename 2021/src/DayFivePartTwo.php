@@ -22,12 +22,10 @@ class DayFivePartTwo
                     ($x1 === $x2) ? 0 : ($x1 > $x2 ? -1 : 1),
                     ($y1 === $y2) ? 0 : ($y1 > $y2 ? -1 : 1)
                 ];
-                $len = 1 + intval(
-                    sqrt(
-                        pow($x2 - $x1, 2) + pow($y2 - $y1, 2)
-                    )
-                );
-                $fill = array_fill(0, $len, null);
+                $len = ($y1 === $y2)
+                    ? abs($x1 - $x2)
+                    : abs($y1 - $y2);
+                $fill = array_fill(0, $len + 1, null);
 
                 return array_map(
                     fn($key) => [

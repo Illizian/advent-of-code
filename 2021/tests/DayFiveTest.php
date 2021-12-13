@@ -33,5 +33,5 @@ it('can process the second puzzle input', function() {
         DayFivePartTwo::process(
             Loader::load(__DIR__ . '/fixtures/day-five.txt')
         )
-    )->toEqual("<insert-your-answer-here>");
+    )->toEqual(21101);
 });
