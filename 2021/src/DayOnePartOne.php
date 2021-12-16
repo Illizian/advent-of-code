@@ -11,7 +11,7 @@ class DayOnePartOne
     public static function process(array $input): int
     {
         return Collection::make($input)
-            ->map(fn($val) => (int) $val)
+            ->transform(fn($val) => (int) $val)
             ->sliding(2)
             ->reduce(fn(int $sum, Collection $items) => +($items->last() > $items->first()) + $sum, 0);
     }

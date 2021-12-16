@@ -16,7 +16,7 @@ class DayFivePartTwo
                 $input
             )
         )
-            ->map(function($coords) {
+            ->transform(function($coords) {
                 [ [ $x1, $y1 ], [ $x2, $y2 ] ] = $coords;
                 $dir = [
                     ($x1 === $x2) ? 0 : ($x1 > $x2 ? -1 : 1),
@@ -37,7 +37,7 @@ class DayFivePartTwo
                 );
             })
             ->flatten(1)
-            ->map(fn($coords) => "{$coords[0]} x {$coords[1]}")
+            ->transform(fn($coords) => "{$coords[0]} x {$coords[1]}")
             ->groupBy(fn($str) => $str)
             ->map
             ->count()

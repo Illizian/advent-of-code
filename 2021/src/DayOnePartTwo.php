@@ -12,7 +12,7 @@ class DayOnePartTwo
     {
         return DayOnePartOne::process(
             Collection::make($input)
-                ->map(fn($value) => (int) $value)
+                ->transform(fn($value) => (int) $value)
                 ->sliding(3)
                 ->map->sum()
                 ->toArray()

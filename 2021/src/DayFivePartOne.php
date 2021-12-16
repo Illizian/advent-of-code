@@ -21,7 +21,7 @@ class DayFivePartOne
                 $coords[0][0] === $coords[1][0] ||
                 $coords[0][1] === $coords[1][1]
             ))
-            ->map(function($coords) {
+            ->transform(function($coords) {
                 // Direction: 0 = X // 1 = Y
                 $dir = +($coords[0][0] === $coords[1][0]);
                 $length = abs($coords[0][$dir] - $coords[1][$dir]) + 1;
@@ -40,7 +40,7 @@ class DayFivePartOne
                 );
             })
             ->flatten(1)
-            ->map(fn($coords) => "{$coords[0]} x {$coords[1]}")
+            ->transform(fn($coords) => "{$coords[0]} x {$coords[1]}")
             ->groupBy(fn($str) => $str)
             ->map
             ->count()

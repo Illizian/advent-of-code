@@ -19,9 +19,9 @@ class DayThreePartOne
     public static function process(array $input): int
     {
         [ $gamma, $epsilon ] = Collection::make($input)
-            ->map(fn($row) => str_split($row))
+            ->transform(fn($row) => str_split($row))
             ->transpose()
-            ->map(fn($bits) => collect($bits)->mode()[0])
+            ->transform(fn($bits) => collect($bits)->mode()[0])
             ->reduceSpread(
                 fn($gamma, $epsilon, $bit) => [
                     $gamma . $bit,
