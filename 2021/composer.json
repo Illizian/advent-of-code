@@ -26,5 +26,8 @@
         "pestphp/pest": "^1.21",
         "spatie/ray": "^1.32",
         "symfony/var-dumper": "^5.4"
+    },
+    "require-dev": {
+        "spatie/phpunit-watcher": "^1.23"
     }
 }
