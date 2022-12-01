@@ -10,4 +10,5 @@ it('processes the Part One input, and provides the expected output', function ($
   expect($output)->toEqual($expected);
 })->with([
   ['/input-example.txt', 24000],
+  ['/input-part1.txt', 69281],
 ]);
