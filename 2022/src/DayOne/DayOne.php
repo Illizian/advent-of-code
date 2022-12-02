@@ -16,13 +16,15 @@ class DayOne
 
   public static function PartOne(string $input): int
   {
-    return self::parse($input)->first();
+    return self::parse($input)
+      ->take(1)
+      ->sum();
   }
 
   public static function PartTwo(string $input): int
   {
     return self::parse($input)
       ->take(3)
-      ->reduce(fn (int $total, int $calories) => $total + $calories, 0);
+      ->sum();
   }
 }
