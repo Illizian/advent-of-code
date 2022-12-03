@@ -31,6 +31,15 @@ class DayTwo
     };
   }
 
+  public static function stringToResult(string $char): string
+  {
+    return match ($char) {
+      'X' => 'Loss',
+      'Y' => 'Draw',
+      'Z' => 'Win',
+    };
+  }
+
   public static function getRoundScore(array $match): int
   {
     [$opponent, $player] = $match;
@@ -49,6 +58,15 @@ class DayTwo
       : self::$score['Loss'];
   }
 
+  public static function determinePlay(string $opponent, string $intent): array
+  {
+    return match ($intent) {
+      'Loss' => [$opponent, self::$rules[$opponent]],
+      'Draw' => [$opponent, $opponent],
+      'Win' => [$opponent, array_flip(self::$rules)[$opponent]],
+    };
+  }
+
   public static function PartOne(string $input): int
   {
     return collect(explode("\n", $input))
@@ -57,6 +75,19 @@ class DayTwo
         self::stringToEntity($round[0]),
         self::stringToEntity($round[1]),
       ])
+      ->map(fn ($round) => self::getRoundScore($round))
+      ->sum();
+  }
+
+  public static function PartTwo(string $input): int
+  {
+    return collect(explode("\n", $input))
+      ->map(fn ($round) => explode(" ", $round))
+      ->map(fn ($round) => [
+        self::stringToEntity($round[0]),
+        self::stringToResult($round[1]),
+      ])
+      ->map(fn ($round) => self::determinePlay(...$round))
       ->map(fn ($round) => self::getRoundScore($round))
       ->sum();
   }
