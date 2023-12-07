@@ -5,6 +5,38 @@ export function solvePart1(input: string) {
     .split(" ")
     .map((n) => Number.parseInt(n));
 
+  return solveSeeds(seeds ?? [], data);
+}
+
+export function solvePart2(input: string) {
+  const [header, ...data] = input.split("\n\n");
+  const seeds = header
+    ?.replace("seeds: ", "")
+    .split(" ")
+    .map((n) => Number.parseInt(n));
+
+  const pairs = Array.from(
+    { length: (seeds?.length ?? 0) / 2 },
+    (_, i) => seeds?.slice(i * 2, i * 2 + 2),
+  ) as [number, number][];
+
+  const locations = pairs.map(function (pair: [number, number]) {
+    const [start, count] = pair;
+    // console.log({ pair, start, count });
+    let min = Infinity;
+
+    for (let i = start ?? 0; i < start + (count ?? 0); i++) {
+      // console.log({ min, i });
+      min = Math.min(solveSeeds([i], data), min);
+    }
+
+    return min;
+  });
+
+  return Math.min(...locations);
+}
+
+function solveSeeds(seeds: number[], data: string[]) {
   const maps = data.map(function (category) {
     const [key, ...data] = category.replace(" map:", "").split("\n");
 
@@ -37,5 +69,3 @@ export function solvePart1(input: string) {
 
   return Math.min(...locations);
 }
-
-export function solvePart2(input: string) {}
