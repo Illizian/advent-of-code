@@ -20,13 +20,15 @@ export function solvePart2(input: string) {
     (_, i) => seeds?.slice(i * 2, i * 2 + 2),
   ) as [number, number][];
 
-  const locations = pairs.map(function (pair: [number, number]) {
+  console.log(`There are ${pairs.length} pairs to process`);
+
+  const locations = pairs.map(function (pair: [number, number], index) {
     const [start, count] = pair;
-    // console.log({ pair, start, count });
+    console.log({ start, count });
     let min = Infinity;
 
     for (let i = start ?? 0; i < start + (count ?? 0); i++) {
-      // console.log({ min, i });
+      console.log(`${index + 1}/${pairs.length}: ${i - start}/${count}`);
       min = Math.min(solveSeeds([i], data), min);
     }
 
