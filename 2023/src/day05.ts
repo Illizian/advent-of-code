@@ -28,7 +28,6 @@ export function solvePart2(input: string) {
     let min = Infinity;
 
     for (let i = start ?? 0; i < start + (count ?? 0); i++) {
-      console.log(`${index + 1}/${pairs.length}: ${i - start}/${count}`);
       min = Math.min(solveSeeds([i], data), min);
     }
 
