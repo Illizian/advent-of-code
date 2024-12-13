@@ -6,10 +6,13 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 func main() {
+	type work struct {
+		stone, count int
+	}
+	const workers = 4
 	const ticks = 75
 	const multiplier = 2024
 
@@ -33,51 +36,67 @@ func main() {
 	}
 
 	// Initialize input map
-	input := make(map[int]int)
+	input := make(map[int]int, 1e6)
 	for _, char := range strings.Fields(lines[0]) {
 		num := parseInt(char)
 		input[num]++
 	}
 
-	// Process ticks
+	// Whip those workers
 	for tick := 0; tick < ticks; tick++ {
-		start := time.Now()
+		workCh := make(chan work)
+		resultCh := make(chan map[int]int, workers)
 
-		stones := stones(input)
+		// Start workers
+		for i := 0; i < workers; i++ {
+			go func() {
+				stones := make(map[int]int)
+				for w := range workCh {
+					stone, count := w.stone, w.count
+					if stone == 0 {
+						stones[1] += count
+					} else if digits := digits(stone); digits%2 == 0 {
+						left, right := split(stone, digits)
+						stones[left] += count
+						stones[right] += count
+					} else {
+						stones[stone*2024] += count
+					}
+				}
+				resultCh <- stones
+			}()
+		}
 
-		for _, stone := range stones {
-			currentCount := input[stone]
-			if currentCount == 0 {
-				continue
-			}
-			input[stone]--
-
-			if stone == 0 {
-				input[1]++
-			} else if digits := digits(stone); digits%2 == 0 {
-				left, right := split(stone, digits)
-				input[left]++
-				input[right]++
-			} else {
-				input[stone*multiplier]++
+		// Distribute work
+		for stone, count := range input {
+			if count > 0 {
+				workCh <- work{stone, count}
 			}
 		}
 
-		duration := time.Since(start)
-		fmt.Printf("Completed Tick #%d in %.2f secs\n", tick, duration.Seconds())
+		close(workCh)
+
+		// Aggregate results
+		newInput := make(map[int]int)
+		for i := 0; i < workers; i++ {
+			for k, v := range <-resultCh {
+				newInput[k] += v
+			}
+		}
+		input = newInput
 	}
 
-	// Calculate total
 	total := 0
 	for _, count := range input {
 		total += count
 	}
+
 	fmt.Println(total)
 }
 
 // Helper functions
 func stones(m map[int]int) []int {
-	keys := make([]int, 0)
+	keys := make([]int, 0, len(m))
 	for key, count := range m {
 		for i := 0; i < count; i++ {
 			keys = append(keys, key)
@@ -103,6 +122,7 @@ func split(n, digits int) (int, int) {
 	return n / divisor, n % divisor
 }
 
+// lib utils
 func parseInt(s string) int {
 	num, err := strconv.Atoi(s)
 	if err != nil {
