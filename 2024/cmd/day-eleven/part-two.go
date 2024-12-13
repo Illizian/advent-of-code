@@ -10,111 +10,104 @@ import (
 )
 
 func main() {
+	const ticks = 75
+	const multiplier = 2024
+
+	// Open input file
 	file, err := os.Open("./input/day-eleven.txt")
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error opening file: %v\n", err)
+		return
 	}
-
 	defer file.Close()
 
+	// Read file contents
 	var lines []string
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
+		fmt.Printf("Error reading file: %v\n", err)
+		return
 	}
 
-	// map[stone] = count
+	// Initialize input map
 	input := make(map[int]int)
-	for _, char := range strings.Split(lines[0], " ") {
-		num := parseInt(string(char))
-		input[num] = get(input, num, 0) + 1
+	for _, char := range strings.Fields(lines[0]) {
+		num := parseInt(char)
+		input[num]++
 	}
 
-	ticks := 75
-
+	// Process ticks
 	for tick := 0; tick < ticks; tick++ {
 		start := time.Now()
 
 		stones := stones(input)
 
 		for _, stone := range stones {
-			char := strconv.Itoa(stone)
-			digits := len(char)
+			currentCount := input[stone]
+			if currentCount == 0 {
+				continue
+			}
+			input[stone]--
 
 			if stone == 0 {
-				input[stone] = get(input, stone, 1) - 1
-				input[1] = get(input, 1, 0) + 1
-				continue
+				input[1]++
+			} else if digits := digits(stone); digits%2 == 0 {
+				left, right := split(stone, digits)
+				input[left]++
+				input[right]++
+			} else {
+				input[stone*multiplier]++
 			}
-
-			if digits%2 == 0 {
-				left := parseInt(char[:digits/2])
-				right := parseInt(char[digits/2:])
-
-				input[stone] = get(input, stone, 1) - 1
-				input[left] = get(input, left, 0) + 1
-				input[right] = get(input, right, 0) + 1
-				continue
-			}
-
-			input[stone] = get(input, stone, 1) - 1
-			input[stone*2024] = get(input, stone*2024, 0) + 1
 		}
 
-		duration := time.Now().Sub(start)
-		fmt.Printf("Completed Tick #%d, in %.2fsecs\n", tick, duration.Seconds())
+		duration := time.Since(start)
+		fmt.Printf("Completed Tick #%d in %.2f secs\n", tick, duration.Seconds())
 	}
 
+	// Calculate total
 	total := 0
 	for _, count := range input {
-		total = total + count
+		total += count
 	}
-
 	fmt.Println(total)
 }
 
+// Helper functions
 func stones(m map[int]int) []int {
-	keys := make([]int, 0, len(m))
+	keys := make([]int, 0)
 	for key, count := range m {
-		if count == 0 {
-			continue
-		}
-
-		for range count {
+		for i := 0; i < count; i++ {
 			keys = append(keys, key)
 		}
 	}
-
 	return keys
 }
 
-func splice[T any](slice []T, index, deleteCount int, values []T) []T {
-	output := make([]T, 0, len(slice)+len(values)-deleteCount)
-
-	output = append(output, slice[:index]...)
-	output = append(output, values...)
-	output = append(output, slice[index+deleteCount:]...)
-
-	return output
+func digits(n int) int {
+	digits := 0
+	for n > 0 {
+		digits++
+		n /= 10
+	}
+	return digits
 }
 
-func get[K comparable, V any](m map[K]V, key K, defaultValue V) V {
-	if value, exists := m[key]; exists {
-		return value
+func split(n, digits int) (int, int) {
+	divisor := 1
+	for i := 0; i < digits/2; i++ {
+		divisor *= 10
 	}
-	return defaultValue
+	return n / divisor, n % divisor
 }
 
 func parseInt(s string) int {
 	num, err := strconv.Atoi(s)
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error converting %s to integer: %v\n", s, err)
+		return 0
 	}
-
 	return num
-
 }
