@@ -36,7 +36,6 @@ func main() {
 	}
 
 	// and continue as normal
-
 	re := regexp.MustCompile(`mul\((\d*),(\d*)\)`)
 
 	sum := 0
