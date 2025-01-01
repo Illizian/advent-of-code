@@ -1,75 +1,66 @@
 package main
 
 import (
-	"bufio"
+	"advent-of-code-2024/pkg/file"
+	"advent-of-code-2024/pkg/math"
+	"advent-of-code-2024/pkg/util"
 	"fmt"
-	"os"
-	"strconv"
 	"strings"
 )
 
 func main() {
-	file, err := os.Open("./input/day-two.txt")
+	input, err := file.Input("./input/day-two.txt")
 	if err != nil {
 		panic(err)
 	}
 
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
-	}
-
-	safe := 0
-
-safe:
-	for _, line := range lines {
-		nums := strings.Split(line, " ")
-		dir := 0
-
-		for i := 1; i < len(nums); i++ {
-			prev, err := strconv.Atoi(nums[i-1])
-			if err != nil {
-				panic(err)
-			}
-
-			curr, err := strconv.Atoi(nums[i])
-			if err != nil {
-				panic(err)
-			}
-
-			// Any two adjacent levels differ by at least one and at most three.
-			if prev == curr || prev-curr > 3 || prev-curr < -3 {
-				continue safe
-			}
-
-			// The levels are either all increasing or all decreasing.
-			if prev > curr && dir == 1 {
-				continue safe
-			}
-
-			if curr > prev && dir == -1 {
-				continue safe
-			}
-
-			// Register direction
-			if dir == 0 {
-				if prev > curr {
-					dir = -1
-				} else {
-					dir = 1
-				}
-			}
+	// Let's do some type conversions
+	var reports [][]int
+	for _, line := range input {
+		var report []int
+		for _, char := range strings.Split(line, " ") {
+			report = append(report, util.ParseInt(char))
 		}
 
-		safe = safe + 1
+		reports = append(reports, report)
 	}
 
-	fmt.Println(safe)
+	// Ok, let's check zee levels...
+	sum := 0
+	for _, report := range reports {
+		if isSafe(report) {
+			sum++
+		}
+	}
+
+	fmt.Println(sum)
+}
+
+func isSafe(report []int) bool {
+	if report[1] == report[0] {
+		return false
+	}
+
+	dir := (report[1] - report[0]) / math.Abs(report[1]-report[0])
+
+	for step := 1; step < len(report); step++ {
+		prev := report[step-1]
+		curr := report[step]
+
+		// The levels are either all increasing or all decreasing.
+		if curr > prev && dir == -1 {
+			return false
+		}
+
+		if prev > curr && dir == 1 {
+			return false
+		}
+
+		// The difference between any two adjacent levels is at least 1 and at most 3.
+		if prev == curr || prev-curr > 3 || prev-curr < -3 {
+			return false
+		}
+	}
+
+	return true
 }
